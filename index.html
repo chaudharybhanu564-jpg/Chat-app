@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ChatApp</title><link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div id="auth" class="auth">
+  <div class="auth-card">
+    <div class="brand">💬 ChatApp</div>
+    <h1 id="authTitle">Welcome back</h1>
+    <p id="authSub">Login to continue chatting</p>
+    <input id="name" placeholder="Your name" class="signupOnly">
+    <input id="email" type="email" placeholder="Email">
+    <input id="password" type="password" placeholder="Password (6+ characters)">
+    <button id="authBtn">Login</button>
+    <p class="switch" id="switch">Don't have an account? <b>Sign up</b></p>
+    <div id="error"></div>
+  </div>
+</div>
+
+<div id="app" class="app hidden">
+  <aside class="sidebar">
+    <header><div class="avatar me">M</div><div class="brandSmall">ChatApp</div><button id="logout">↪</button></header>
+    <div class="search">⌕ <input id="search" placeholder="Search users"></div>
+    <div id="users"></div>
+  </aside>
+  <main class="chat">
+    <header class="chatHead">
+      <div id="chatAvatar" class="avatar">?</div>
+      <div><b id="chatName">Select a user</b><small id="chatStatus">Start a conversation</small></div>
+    </header>
+    <section id="messages" class="messages"><div class="empty">Select a person to start chatting 💬</div></section>
+    <form id="form" class="composer">
+      <input id="message" autocomplete="off" placeholder="Type a message..." disabled>
+      <button disabled id="send">➤</button>
+    </form>
+  </main>
+</div>
+<script src="/socket.io/socket.io.js"></script><script src="app.js"></script>
+</body></html>
