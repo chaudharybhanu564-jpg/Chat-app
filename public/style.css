@@ -1,1 +1,401 @@
-*{box-sizing:border-box}body{margin:0;font-family:Arial,sans-serif;background:#d9dbd5;color:#111}button,input{font:inherit}.hidden{display:none!important}.auth{height:100vh;display:grid;place-items:center;background:#0b141a}.auth-card{width:min(390px,92%);background:#fff;border-radius:14px;padding:30px;box-shadow:0 15px 50px #0005}.brand{font-size:25px;font-weight:700;margin-bottom:25px;color:#128c7e}.auth-card h1{margin:0 0 6px}.auth-card p{color:#667781}.auth-card input{display:block;width:100%;padding:13px;margin:10px 0;border:1px solid #ddd;border-radius:8px;outline:0}.auth-card button{width:100%;padding:13px;border:0;border-radius:8px;background:#25d366;color:#fff;font-weight:bold;cursor:pointer}.switch{text-align:center;font-size:13px;cursor:pointer}.signupOnly{display:none!important}.signup .signupOnly{display:block!important}.auth-card #error{color:#d00;font-size:13px;margin-top:10px}.app{height:100vh;max-width:1500px;margin:auto;display:flex;background:#fff}.sidebar{width:370px;border-right:1px solid #ddd}.sidebar header,.chatHead{height:70px;background:#f0f2f5;display:flex;align-items:center;padding:0 16px;gap:12px}.sidebar header button{margin-left:auto;border:0;background:none;font-size:22px;cursor:pointer}.brandSmall{font-weight:bold}.avatar{width:45px;height:45px;border-radius:50%;background:#25d366;color:#fff;display:grid;place-items:center;font-weight:bold;flex:none}.me{background:#128c7e}.search{margin:10px;background:#f0f2f5;padding:11px;border-radius:8px;color:#667781}.search input{border:0;background:none;outline:0;width:90%}.user{display:flex;gap:12px;padding:12px 16px;border-bottom:1px solid #eee;cursor:pointer}.user:hover,.user.active{background:#f0f2f5}.uinfo{flex:1}.uinfo b{display:block}.uinfo small{color:#667781}.dot{width:8px;height:8px;border-radius:50%;background:#25d366;display:inline-block;margin-right:5px}.chat{flex:1;display:flex;flex-direction:column;background:#efeae2}.chatHead{background:#f0f2f5}.chatHead small{display:block;color:#667781;margin-top:3px}.messages{flex:1;overflow:auto;padding:25px 7%;background-image:radial-gradient(#d9d2c8 1px,transparent 1px);background-size:22px 22px}.bubble{max-width:65%;padding:9px 12px;border-radius:8px;margin:7px 0;box-shadow:0 1px 1px #0001}.in{background:#fff}.out{background:#d9fdd3;margin-left:auto}.bubble small{font-size:10px;color:#667781;margin-left:10px}.empty{text-align:center;color:#667781;margin-top:20vh}.composer{height:64px;background:#f0f2f5;display:flex;gap:10px;padding:10px}.composer input{flex:1;border:0;border-radius:8px;padding:12px;outline:0}.composer button{width:45px;border:0;border-radius:50%;background:#25d366;color:#fff;cursor:pointer}.composer button:disabled{background:#aaa}@media(max-width:700px){.sidebar{width:100%}.chat{display:none}.sidebar.mobile-hide{display:none}.chat.mobile-show{display:flex}.messages{padding:20px 4%}}
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #f5f7f8;
+  color: #111;
+}
+
+button,
+input {
+  font: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+.hidden {
+  display: none !important;
+}
+
+/* AUTH */
+
+.auth {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #07131a;
+  padding: 20px;
+}
+
+.auth-card {
+  width: 100%;
+  max-width: 500px;
+  background: white;
+  border-radius: 24px;
+  padding: 40px;
+  box-shadow: 0 20px 60px rgba(0,0,0,.25);
+}
+
+.brand {
+  color: #159b8c;
+  font-size: 26px;
+  font-weight: bold;
+  margin-bottom: 30px;
+}
+
+.auth-card h1 {
+  margin-bottom: 8px;
+  font-size: 34px;
+}
+
+.auth-card p {
+  color: #707b80;
+}
+
+.auth-card input {
+  width: 100%;
+  padding: 17px;
+  margin-top: 15px;
+  border: 1px solid #ddd;
+  border-radius: 12px;
+  outline: none;
+}
+
+.auth-card input:focus {
+  border-color: #19b69f;
+}
+
+.auth-card button {
+  width: 100%;
+  margin-top: 20px;
+  padding: 16px;
+  border: 0;
+  border-radius: 12px;
+  background: #20c86b;
+  color: white;
+  font-weight: bold;
+}
+
+.switch {
+  text-align: center;
+  margin-top: 20px;
+}
+
+
+/* MAIN APP */
+
+.app {
+  height: 100vh;
+  display: flex;
+  background: white;
+}
+
+.sidebar {
+  width: 360px;
+  border-right: 1px solid #ddd;
+  background: #fff;
+}
+
+.appHeader {
+  height: 80px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 15px 20px;
+  border-bottom: 1px solid #eee;
+}
+
+.brandSmall {
+  flex: 1;
+  font-size: 22px;
+  font-weight: bold;
+}
+
+.topButton,
+#logout {
+  border: 0;
+  background: transparent;
+  font-size: 22px;
+}
+
+.profileButton {
+  border: 0;
+  background: transparent;
+  padding: 0;
+}
+
+.avatar {
+  width: 54px;
+  height: 54px;
+  border-radius: 50%;
+  background: #19b69f;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 22px;
+  font-weight: bold;
+}
+
+.featureMenu {
+  display: flex;
+  gap: 10px;
+  padding: 15px;
+}
+
+.featureBtn {
+  flex: 1;
+  padding: 13px;
+  border: 0;
+  border-radius: 12px;
+  background: #eef7f5;
+  color: #087f70;
+  font-weight: bold;
+}
+
+.search {
+  margin: 5px 15px 15px;
+  padding: 13px 16px;
+  background: #f1f3f5;
+  border-radius: 12px;
+  display: flex;
+  gap: 8px;
+}
+
+.search input {
+  width: 100%;
+  border: 0;
+  outline: none;
+  background: transparent;
+}
+
+#users {
+  overflow-y: auto;
+}
+
+.user {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 18px 20px;
+  border-bottom: 1px solid #eee;
+}
+
+.user:hover {
+  background: #f5f8f8;
+}
+
+
+/* CHAT */
+
+.chat {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.chatHead {
+  height: 80px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 12px 20px;
+  border-bottom: 1px solid #eee;
+}
+
+.chatHead small {
+  display: block;
+  color: #777;
+  margin-top: 4px;
+}
+
+.messages {
+  flex: 1;
+  overflow-y: auto;
+  padding: 20px;
+}
+
+.empty {
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #777;
+}
+
+.composer {
+  display: flex;
+  gap: 10px;
+  padding: 15px;
+  border-top: 1px solid #eee;
+}
+
+.composer input {
+  flex: 1;
+  padding: 15px;
+  border: 1px solid #ddd;
+  border-radius: 12px;
+  outline: none;
+}
+
+.composer button {
+  width: 55px;
+  border: 0;
+  border-radius: 12px;
+  background: #20c86b;
+  color: white;
+}
+
+
+/* FEATURE PANELS */
+
+.featurePanel {
+  position: fixed;
+  inset: 0;
+  background: white;
+  z-index: 20;
+  overflow-y: auto;
+}
+
+.panelHeader {
+  height: 75px;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  padding: 15px 22px;
+  border-bottom: 1px solid #eee;
+}
+
+.panelHeader h2 {
+  margin: 0;
+}
+
+.backBtn {
+  border: 0;
+  background: transparent;
+  font-size: 28px;
+}
+
+.profileContent {
+  text-align: center;
+  padding: 50px 20px;
+}
+
+.largeAvatar {
+  width: 120px;
+  height: 120px;
+  margin: auto;
+  border-radius: 50%;
+  background: #19b69f;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 50px;
+  font-weight: bold;
+}
+
+.panelAction {
+  padding: 15px 25px;
+  border: 0;
+  border-radius: 12px;
+  background: #20c86b;
+  color: white;
+}
+
+
+/* SETTINGS */
+
+.settingsList {
+  padding: 15px;
+}
+
+.settingItem {
+  width: 100%;
+  display: flex;
+  gap: 18px;
+  padding: 20px;
+  border: 0;
+  border-bottom: 1px solid #eee;
+  background: white;
+  text-align: left;
+  font-size: 17px;
+}
+
+
+/* STATUS */
+
+.statusCreate {
+  text-align: center;
+  padding: 50px 20px;
+}
+
+.statusAdd {
+  padding: 16px 25px;
+  border: 0;
+  border-radius: 12px;
+  background: #20c86b;
+  color: white;
+  font-weight: bold;
+}
+
+
+/* ENTERTAINMENT */
+
+.entertainmentGrid {
+  padding: 25px;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 15px;
+}
+
+.entCard {
+  min-height: 150px;
+  border: 0;
+  border-radius: 18px;
+  background: #f2f6f6;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  font-size: 35px;
+}
+
+.entCard b {
+  font-size: 18px;
+}
+
+.entCard small {
+  font-size: 13px;
+  color: #777;
+}
+
+
+/* MOBILE */
+
+@media (max-width: 700px) {
+
+  .sidebar {
+    width: 100%;
+  }
+
+  .chat {
+    display: none;
+  }
+
+  .auth-card {
+    padding: 30px 22px;
+  }
+
+  .entertainmentGrid {
+    grid-template-columns: 1fr 1fr;
+  }
+
+}
