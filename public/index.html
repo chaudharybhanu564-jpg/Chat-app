@@ -1,42 +1,248 @@
 <!doctype html>
 <html lang="en">
 <head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>ChatApp</title><link rel="stylesheet" href="style.css">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ChatApp</title>
+<link rel="stylesheet" href="style.css">
 </head>
+
 <body>
+
+<!-- LOGIN / SIGNUP -->
 <div id="auth" class="auth">
   <div class="auth-card">
     <div class="brand">💬 ChatApp</div>
+
     <h1 id="authTitle">Welcome back</h1>
     <p id="authSub">Login to continue chatting</p>
+
     <input id="name" placeholder="Your name" class="signupOnly">
     <input id="email" type="email" placeholder="Email">
     <input id="password" type="password" placeholder="Password (6+ characters)">
+
     <button id="authBtn">Login</button>
-    <p class="switch" id="switch">Don't have an account? <b>Sign up</b></p>
+
+    <p class="switch" id="switch">
+      Don't have an account? <b>Sign up</b>
+    </p>
+
     <div id="error"></div>
   </div>
 </div>
 
+
+<!-- MAIN APP -->
 <div id="app" class="app hidden">
+
+  <!-- SIDEBAR -->
   <aside class="sidebar">
-    <header><div class="avatar me">M</div><div class="brandSmall">ChatApp</div><button id="logout">↪</button></header>
-    <div class="search">⌕ <input id="search" placeholder="Search users"></div>
-    <div id="users"></div>
-  </aside>
-  <main class="chat">
-    <header class="chatHead">
-      <button id="backBtn" type="button">←</button>
-      <div id="chatAvatar" class="avatar">?</div>
-      <div><b id="chatName">Select a user</b><small id="chatStatus">Start a conversation</small></div>
+
+    <header class="appHeader">
+      <button id="profileBtn" class="profileButton">
+        <div class="avatar me" id="myAvatar">M</div>
+      </button>
+
+      <div class="brandSmall">ChatApp</div>
+
+      <button id="settingsBtn" class="topButton">⚙️</button>
+
+      <button id="logout">↪</button>
     </header>
-    <section id="messages" class="messages"><div class="empty">Select a person to start chatting 💬</div></section>
+
+
+    <!-- MAIN MENU -->
+    <div class="featureMenu">
+
+      <button id="statusBtn" class="featureBtn">
+        🟢 <span>Status</span>
+      </button>
+
+      <button id="entertainmentBtn" class="featureBtn">
+        🎬 <span>Entertainment</span>
+      </button>
+
+    </div>
+
+
+    <!-- SEARCH -->
+    <div class="search">
+      🔍
+      <input id="search" placeholder="Search users">
+    </div>
+
+    <!-- USERS -->
+    <div id="users"></div>
+
+  </aside>
+
+
+  <!-- CHAT AREA -->
+  <main class="chat">
+
+    <header class="chatHead">
+
+      <div id="chatAvatar" class="avatar">?</div>
+
+      <div>
+        <b id="chatName">Select a user</b>
+        <small id="chatStatus">Start a conversation</small>
+      </div>
+
+    </header>
+
+
+    <section id="messages" class="messages">
+      <div class="empty">
+        Select a person to start chatting 💬
+      </div>
+    </section>
+
+
     <form id="form" class="composer">
-      <input id="message" autocomplete="off" placeholder="Type a message..." disabled>
+
+      <input
+        id="message"
+        autocomplete="off"
+        placeholder="Type a message..."
+        disabled
+      >
+
       <button disabled id="send">➤</button>
+
     </form>
+
   </main>
+
+
+  <!-- PROFILE PANEL -->
+  <section id="profilePanel" class="featurePanel hidden">
+
+    <div class="panelHeader">
+      <button class="backBtn" data-close="profilePanel">←</button>
+      <h2>Profile</h2>
+    </div>
+
+    <div class="profileContent">
+
+      <div class="largeAvatar" id="profileAvatar">M</div>
+
+      <h2 id="profileName">My Profile</h2>
+
+      <p id="profileEmail">Email</p>
+
+      <p id="profileAbout">
+        Hey there! I am using ChatApp.
+      </p>
+
+      <button class="panelAction">
+        ✏️ Edit Profile
+      </button>
+
+    </div>
+
+  </section>
+
+
+  <!-- SETTINGS PANEL -->
+  <section id="settingsPanel" class="featurePanel hidden">
+
+    <div class="panelHeader">
+      <button class="backBtn" data-close="settingsPanel">←</button>
+      <h2>Settings</h2>
+    </div>
+
+    <div class="settingsList">
+
+      <button class="settingItem">
+        👤 <span>Account</span>
+      </button>
+
+      <button class="settingItem">
+        🔔 <span>Notifications</span>
+      </button>
+
+      <button class="settingItem">
+        🔒 <span>Privacy</span>
+      </button>
+
+      <button class="settingItem">
+        🌙 <span>Theme</span>
+      </button>
+
+      <button class="settingItem">
+        🛡️ <span>Security</span>
+      </button>
+
+    </div>
+
+  </section>
+
+
+  <!-- STATUS PANEL -->
+  <section id="statusPanel" class="featurePanel hidden">
+
+    <div class="panelHeader">
+      <button class="backBtn" data-close="statusPanel">←</button>
+      <h2>Status</h2>
+    </div>
+
+    <div class="statusCreate">
+
+      <button class="statusAdd">
+        ➕ Add Status
+      </button>
+
+      <p>No status yet.</p>
+
+    </div>
+
+  </section>
+
+
+  <!-- ENTERTAINMENT PANEL -->
+  <section id="entertainmentPanel" class="featurePanel hidden">
+
+    <div class="panelHeader">
+      <button class="backBtn" data-close="entertainmentPanel">←</button>
+      <h2>Entertainment</h2>
+    </div>
+
+    <div class="entertainmentGrid">
+
+      <button class="entCard">
+        🎵
+        <b>Music</b>
+        <small>Free & legal music</small>
+      </button>
+
+      <button class="entCard">
+        🎬
+        <b>Videos</b>
+        <small>Entertainment videos</small>
+      </button>
+
+      <button class="entCard">
+        📰
+        <b>News</b>
+        <small>Interesting updates</small>
+      </button>
+
+      <button class="entCard">
+        🎮
+        <b>Games</b>
+        <small>Fun activities</small>
+      </button>
+
+    </div>
+
+  </section>
+
 </div>
-<script src="/socket.io/socket.io.js"></script><script src="app.js"></script>
-</body></html>
+
+
+<script src="/socket.io/socket.io.js"></script>
+<script src="app.js"></script>
+
+</body>
+</html>
