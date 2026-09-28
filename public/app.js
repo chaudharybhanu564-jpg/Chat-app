@@ -205,3 +205,68 @@ function escapeHtml(s){
   d.textContent=s;
   return d.innerHTML
 }
+/* ===== CHATAPP EXTRA FEATURES ===== */
+
+function openFeaturePanel(id) {
+  const panel = $(id);
+  if (panel) panel.classList.remove("hidden");
+}
+
+function closeFeaturePanel(id) {
+  const panel = $(id);
+  if (panel) panel.classList.add("hidden");
+}
+
+/* Profile */
+$("profileBtn").onclick = () => {
+  if (me) {
+    $("profileName").textContent = me.name || "My Profile";
+    $("profileEmail").textContent = me.email || "";
+    $("myAvatar").textContent = (me.name || "M")[0].toUpperCase();
+    $("profileAvatar").textContent = (me.name || "M")[0].toUpperCase();
+  }
+
+  openFeaturePanel("profilePanel");
+};
+
+
+/* Settings */
+$("settingsBtn").onclick = () => {
+  openFeaturePanel("settingsPanel");
+};
+
+
+/* Status */
+$("statusBtn").onclick = () => {
+  openFeaturePanel("statusPanel");
+};
+
+
+/* Entertainment */
+$("entertainmentBtn").onclick = () => {
+  openFeaturePanel("entertainmentPanel");
+};
+
+
+/* Close buttons */
+document.querySelectorAll("[data-close]").forEach(button => {
+  button.onclick = () => {
+    closeFeaturePanel(button.dataset.close);
+  };
+});
+
+
+/* Placeholder buttons */
+document.querySelector(".panelAction")?.addEventListener("click", () => {
+  alert("Profile editing will be added next.");
+});
+
+document.querySelector(".statusAdd")?.addEventListener("click", () => {
+  alert("Status creation will be added next.");
+});
+
+document.querySelectorAll(".entCard").forEach(card => {
+  card.addEventListener("click", () => {
+    alert("Entertainment section will be added next.");
+  });
+});
