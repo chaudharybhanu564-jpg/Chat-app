@@ -53,10 +53,7 @@ $("logout").onclick=()=>{
   if(socket)socket.disconnect();
   location.reload()
 };
-$("backBtn").onclick=()=>{
-  $("app").querySelector(".sidebar").classList.remove("mobile-hide");
-  $("app").querySelector(".chat").classList.remove("mobile-show");
-}
+// Old mobile back button removed//
 async function loadUsers(){
   const r=await fetch("/api/users",{
     headers:{Authorization:"Bearer "+token}
