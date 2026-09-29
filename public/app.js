@@ -84,7 +84,7 @@ $("search").oninput=e=>{
 };
 
 async function openChat(id){
-  current=users.find(u=>u._id===id);
+  current=users.find(u=>String(u._id)===String(id));
   if(!current)return;
 
   renderUsers(users);
