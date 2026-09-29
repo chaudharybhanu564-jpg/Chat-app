@@ -266,4 +266,6 @@ document.querySelectorAll(".entCard").forEach(card => {
   card.addEventListener("click", () => {
     alert("Entertainment section will be added next.");
   });
+});$("accountBtn")?.addEventListener("click", () => {
+  alert("Account settings will be added next.");
 });
