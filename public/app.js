@@ -43,8 +43,8 @@ authBtn.onclick=async()=>{
 
   token=d.token;
   me=d.user;
-  localStorage.setItem("chat_token",token);
-  localStorage.setItem("chat_user",JSON.stringify(me));
+  sessionStorage.setItem("chat_token",token);
+sessionStorage.setItem("chat_user",JSON.stringify(me));
   showApp()
 };
 
