@@ -1,4 +1,4 @@
-let token=localStorage.getItem("chat_token"), me=JSON.parse(localStorage.getItem("chat_user")||"null");
+let token=sessionStorage.getItem("chat_token"), me=JSON.parse(sessionStorage.getItem("chat_user")||"null");
 let socket=null,current=null,users=[];
 let typingTimer=null;
 
