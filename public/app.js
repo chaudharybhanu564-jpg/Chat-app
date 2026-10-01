@@ -253,21 +253,24 @@ document.querySelectorAll("[data-close]").forEach(button => {
 });
 
 
-/* Placeholder buttons */
-document.querySelector(".panelAction")?.addEventListener("click", () => {
-  alert("Profile editing will be added next.");
+/* Account */
+$("accountBtn")?.addEventListener("click", () => {
+  openFeaturePanel("accountPanel");
 });
 
+/* Edit Profile */
+$("editProfileBtn")?.addEventListener("click", () => {
+  alert("Edit Profile will be added next.");
+});
+
+/* Status */
 document.querySelector(".statusAdd")?.addEventListener("click", () => {
   alert("Status creation will be added next.");
 });
 
+/* Entertainment */
 document.querySelectorAll(".entCard").forEach(card => {
   card.addEventListener("click", () => {
     alert("Entertainment section will be added next.");
   });
-});$("accountBtn")?.addEventListener("click", () => {
-  openFeaturePanel("accountPanel");
-});$("accountBtn")?.addEventListener("click", () => {
-  openFeaturePanel("accountPanel");
 });
