@@ -267,5 +267,7 @@ document.querySelectorAll(".entCard").forEach(card => {
     alert("Entertainment section will be added next.");
   });
 });$("accountBtn")?.addEventListener("click", () => {
-  alert("Account settings will be added next.");
+  openFeaturePanel("accountPanel");
+});$("accountBtn")?.addEventListener("click", () => {
+  openFeaturePanel("accountPanel");
 });
