@@ -10,7 +10,7 @@ let signup=false;
 function showApp(){auth.classList.add("hidden");app.classList.remove("hidden");connect();loadUsers()}
 function showAuth(){auth.classList.remove("hidden");app.classList.add("hidden")}
 
-if(token&&me)showApp();
+if(token&&me)showApp(); 
 
 function setMode(){
   signup=!signup;
