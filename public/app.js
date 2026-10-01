@@ -258,9 +258,8 @@ $("accountBtn")?.addEventListener("click", () => {
   openFeaturePanel("accountPanel");
 });
 
-/* Edit Profile */
 $("editProfileBtn")?.addEventListener("click", () => {
-  alert("Edit Profile will be added next.");
+  openFeaturePanel("editProfilePanel");
 });
 
 /* Status */
