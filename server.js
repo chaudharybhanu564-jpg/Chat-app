@@ -65,7 +65,43 @@ app.post("/api/login", async (req, res) => {
     return res.status(401).json({ error: "Invalid email or password." });
   res.json({ token: sign(user), user: { id: user._id, name: user.name, email: user.email } });
 });
+app.put("/api/profile", auth, async (req, res) => {
+  try {
+    const { name, bio } = req.body;
 
+    if (!name || !name.trim()) {
+      return res.status(400).json({ error: "Name is required." });
+    }
+
+    if ((bio || "").length > 200) {
+      return res.status(400).json({ error: "Bio must be 200 characters or less." });
+    }
+
+    const user = await User.findByIdAndUpdate(
+      req.user.id,
+      {
+        name: name.trim(),
+        bio: (bio || "").trim()
+      },
+      { new: true, runValidators: true }
+    );
+
+    if (!user) {
+      return res.status(404).json({ error: "User not found." });
+    }
+
+    res.json({
+      user: {
+        id: user._id,
+        name: user.name,
+        email: user.email,
+        bio: user.bio
+      }
+    });
+  } catch (e) {
+    res.status(500).json({ error: "Profile update failed." });
+  }
+});
 app.get("/api/users", auth, async (req, res) => {
   const users = await User.find({ _id: { $ne: req.user.id } })
     .select("name email online lastSeen").sort({ name: 1 });
