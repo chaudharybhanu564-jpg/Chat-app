@@ -232,6 +232,10 @@ $("settingsBtn").onclick = () => {
   openFeaturePanel("settingsPanel");
 };
 
+/* Voice Control */
+$("voiceControlBtn")?.addEventListener("click", () => {
+  openFeaturePanel("voiceControlPanel");
+});
 
 /* Status */
 $("statusBtn").onclick = () => {
