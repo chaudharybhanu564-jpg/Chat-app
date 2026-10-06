@@ -428,6 +428,48 @@ $("saveProfileBtn")?.addEventListener("click", async () => {
   }
 });
 
+/* Change Email */
+$("changeEmailBtn")?.addEventListener("click", async () => {
+  const newEmail = prompt("Enter your new email:");
+
+  if (!newEmail) return;
+
+  const email = newEmail.trim();
+
+  if (!email.includes("@")) {
+    alert("Please enter a valid email.");
+    return;
+  }
+
+  try {
+    const response = await fetch("/api/profile/email", {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer " + token
+      },
+      body: JSON.stringify({ email })
+    });
+
+    const data = await response.json();
+
+    if (!response.ok) {
+      alert(data.error || "Email change failed.");
+      return;
+    }
+
+    me = data.user;
+
+    sessionStorage.setItem("chat_user", JSON.stringify(me));
+
+    $("profileEmail").textContent = me.email;
+
+    alert("Email changed successfully!");
+  } catch (error) {
+    alert("Something went wrong. Please try again.");
+  }
+});
+
 /* Status */
 document.querySelector(".statusAdd")?.addEventListener("click", () => {
   alert("Status creation will be added next.");
