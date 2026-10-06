@@ -78,8 +78,9 @@ app.post("/api/login", async (req, res) => {
     name: user.name,
     email: user.email,
     bio: user.bio
-  }
+    }
 });
+
 app.put("/api/profile", auth, async (req, res) => {
   try {
     const { name, bio } = req.body;
