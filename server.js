@@ -255,6 +255,67 @@ app.put("/api/profile", auth, async (req, res) => {
   }
 });
 
+/* CHANGE EMAIL */
+
+app.put("/api/profile/email", auth, async (req, res) => {
+  try {
+    const email = (req.body.email || "").trim().toLowerCase();
+
+    if (!email) {
+      return res.status(400).json({
+        error: "Email is required."
+      });
+    }
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    if (!emailRegex.test(email)) {
+      return res.status(400).json({
+        error: "Please enter a valid email."
+      });
+    }
+
+    const exists = await User.findOne({
+      email,
+      _id: { $ne: req.user.id }
+    });
+
+    if (exists) {
+      return res.status(409).json({
+        error: "Email already registered."
+      });
+    }
+
+    const user = await User.findByIdAndUpdate(
+      req.user.id,
+      { email },
+      {
+        new: true,
+        runValidators: true
+      }
+    );
+
+    if (!user) {
+      return res.status(404).json({
+        error: "User not found."
+      });
+    }
+
+    res.json({
+      user: {
+        id: user._id,
+        name: user.name,
+        email: user.email,
+        bio: user.bio
+      }
+    });
+
+  } catch (e) {
+    res.status(500).json({
+      error: "Email update failed."
+    });
+  }
+});
 
 /* USERS */
 
