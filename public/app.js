@@ -237,6 +237,21 @@ $("voiceControlBtn")?.addEventListener("click", () => {
   openFeaturePanel("voiceControlPanel");
 });
 
+/* Voice Control ON/OFF */
+let voiceEnabled = false;
+
+$("voiceToggleBtn")?.addEventListener("click", () => {
+  voiceEnabled = !voiceEnabled;
+
+  $("voiceToggleBtn").textContent = voiceEnabled
+    ? "🔴 Turn Voice Control OFF"
+    : "🎤 Turn Voice Control ON";
+
+  $("voiceStatus").textContent = voiceEnabled
+    ? "Voice Control is ON"
+    : "Voice Control is OFF";
+});
+
 /* Status */
 $("statusBtn").onclick = () => {
   openFeaturePanel("statusPanel");
