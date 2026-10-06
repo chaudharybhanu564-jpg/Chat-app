@@ -19,6 +19,7 @@ const JWT_SECRET = process.env.JWT_SECRET || "dev_secret_change_me";
 const userSchema = new mongoose.Schema({
   name: { type: String, required: true, trim: true },
   email: { type: String, required: true, unique: true, lowercase: true, trim: true },
+  bio: { type: String, default: "Hey there! I am using ChatApp.", trim: true, maxlength: 200 },
   password: { type: String, required: true },
   online: { type: Boolean, default: false },
   lastSeen: { type: Date, default: Date.now }
