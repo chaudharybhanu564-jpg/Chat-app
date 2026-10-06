@@ -266,6 +266,29 @@ $("accountEditProfileBtn")?.addEventListener("click", () => {
   openFeaturePanel("editProfilePanel");
 });
 
+/* Save Profile */
+$("saveProfileBtn")?.addEventListener("click", () => {
+  const name = $("profileNameInput").value.trim();
+  const bio = $("profileBioInput").value.trim();
+
+  if (!name) {
+    alert("Please enter your name.");
+    return;
+  }
+
+  me.name = name;
+  me.bio = bio || "Hey there! I am using ChatApp.";
+
+  sessionStorage.setItem("chat_user", JSON.stringify(me));
+
+  $("profileName").textContent = me.name;
+  $("profileAbout").textContent = me.bio;
+  $("myAvatar").textContent = me.name[0].toUpperCase();
+  $("profileAvatar").textContent = me.name[0].toUpperCase();
+
+  closeFeaturePanel("editProfilePanel");
+});
+
 /* Status */
 document.querySelector(".statusAdd")?.addEventListener("click", () => {
   alert("Status creation will be added next.");
