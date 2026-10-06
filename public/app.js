@@ -269,6 +269,36 @@ $("saveVoiceCommandBtn")?.addEventListener("click", () => {
   alert("Voice command saved successfully!");
 });
 
+/* Voice Recognition */
+let recognition = null;
+
+if ("webkitSpeechRecognition" in window || "SpeechRecognition" in window) {
+  const SpeechRecognition =
+    window.SpeechRecognition || window.webkitSpeechRecognition;
+
+  recognition = new SpeechRecognition();
+  recognition.lang = "en-IN";
+  recognition.continuous = false;
+  recognition.interimResults = false;
+
+  recognition.onresult = (event) => {
+    const spokenText = event.results[0][0].transcript
+      .trim()
+      .toLowerCase();
+
+    const savedCommand =
+      sessionStorage.getItem("voice_command")?.trim().toLowerCase();
+
+    if (savedCommand && spokenText.includes(savedCommand)) {
+      alert("Voice command detected!");
+    }
+  };
+
+  recognition.onerror = () => {
+    $("voiceStatus").textContent = "Microphone error. Try again.";
+  };
+}
+
 /* Status */
 $("statusBtn").onclick = () => {
   openFeaturePanel("statusPanel");
