@@ -252,6 +252,23 @@ $("voiceToggleBtn")?.addEventListener("click", () => {
     : "Voice Control is OFF";
 });
 
+/* Save Voice Command */
+$("saveVoiceCommandBtn")?.addEventListener("click", () => {
+  const command = $("voiceCommandInput").value.trim();
+
+  if (!command) {
+    alert("Please enter a voice command.");
+    return;
+  }
+
+  sessionStorage.setItem("voice_command", command.toLowerCase());
+
+  $("voiceStatus").textContent =
+    'Command saved: "' + command + '"';
+
+  alert("Voice command saved successfully!");
+});
+
 /* Status */
 $("statusBtn").onclick = () => {
   openFeaturePanel("statusPanel");
