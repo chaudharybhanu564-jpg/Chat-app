@@ -236,7 +236,41 @@ $("settingsBtn").onclick = () => {
 $("voiceControlBtn")?.addEventListener("click", () => {
   openFeaturePanel("voiceControlPanel");
 });
+$("startVoiceBtn")?.addEventListener("click", () => {
+  if (!("webkitSpeechRecognition" in window) && !("SpeechRecognition" in window)) {
+    alert("Voice recognition is not supported in this browser.");
+    return;
+  }
 
+  const SpeechRecognition =
+    window.SpeechRecognition || window.webkitSpeechRecognition;
+
+  const recognition = new SpeechRecognition();
+
+  recognition.lang = "en-US";
+  recognition.continuous = false;
+  recognition.interimResults = false;
+
+  recognition.onstart = () => {
+    alert("🎙️ Listening...");
+  };
+
+  recognition.onresult = (event) => {
+    const command = event.results[0][0].transcript.toLowerCase().trim();
+
+    if (command.includes("close") || command.includes("exit")) {
+      window.location.href = "about:blank";
+    } else {
+      alert("You said: " + command);
+    }
+  };
+
+  recognition.onerror = () => {
+    alert("Voice recognition failed. Please try again.");
+  };
+
+  recognition.start();
+});
 /* Voice Control ON/OFF */
 let voiceEnabled = false;
 
