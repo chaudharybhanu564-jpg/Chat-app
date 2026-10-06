@@ -55,7 +55,15 @@ app.post("/api/register", async (req, res) => {
     if (exists) return res.status(409).json({ error: "Email already registered." });
     const hash = await bcrypt.hash(password, 10);
     const user = await User.create({ name, email, password: hash });
-    res.json({ token: sign(user), user: { id: user._id, name: user.name, email: user.email } });
+    res.json({
+  token: sign(user),
+  user: {
+    id: user._id,
+    name: user.name,
+    email: user.email,
+    bio: user.bio
+  }
+});
   } catch (e) { res.status(500).json({ error: "Registration failed." }); }
 });
 
@@ -63,7 +71,14 @@ app.post("/api/login", async (req, res) => {
   const user = await User.findOne({ email: (req.body.email || "").toLowerCase() });
   if (!user || !(await bcrypt.compare(req.body.password || "", user.password)))
     return res.status(401).json({ error: "Invalid email or password." });
-  res.json({ token: sign(user), user: { id: user._id, name: user.name, email: user.email } });
+  res.json({
+  token: sign(user),
+  user: {
+    id: user._id,
+    name: user.name,
+    email: user.email,
+    bio: user.bio
+  }
 });
 app.put("/api/profile", auth, async (req, res) => {
   try {
