@@ -262,6 +262,10 @@ $("editProfileBtn")?.addEventListener("click", () => {
   openFeaturePanel("editProfilePanel");
 });
 
+$("accountEditProfileBtn")?.addEventListener("click", () => {
+  openFeaturePanel("editProfilePanel");
+});
+
 /* Status */
 document.querySelector(".statusAdd")?.addEventListener("click", () => {
   alert("Status creation will be added next.");
