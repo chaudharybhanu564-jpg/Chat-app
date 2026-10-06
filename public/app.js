@@ -358,13 +358,24 @@ $("accountBtn")?.addEventListener("click", () => {
   openFeaturePanel("accountPanel");
 });
 
+
+/* Edit Profile from Profile */
 $("editProfileBtn")?.addEventListener("click", () => {
+  $("profileNameInput").value = me?.name || "";
+  $("profileBioInput").value = me?.bio || "";
+
   openFeaturePanel("editProfilePanel");
 });
 
+
+/* Edit Profile from Account */
 $("accountEditProfileBtn")?.addEventListener("click", () => {
+  $("profileNameInput").value = me?.name || "";
+  $("profileBioInput").value = me?.bio || "";
+
   openFeaturePanel("editProfilePanel");
 });
+
 
 /* Save Profile */
 $("saveProfileBtn")?.addEventListener("click", async () => {
