@@ -180,7 +180,35 @@
     </div>
 
   </section>
+<!-- VOICE CONTROL PANEL -->
+<section id="voiceControlPanel" class="featurePanel hidden">
 
+  <div class="panelHeader">
+    <button class="backBtn" data-close="voiceControlPanel">←</button>
+    <h2>Voice Control</h2>
+  </div>
+
+  <div class="accountContent">
+
+    <button class="panelAction" id="voiceToggleBtn">
+      🎤 Turn Voice Control ON
+    </button>
+
+    <input
+      id="voiceCommandInput"
+      type="text"
+      placeholder="Set your voice command"
+    >
+
+    <button class="panelAction" id="saveVoiceCommandBtn">
+      💾 Save Command
+    </button>
+
+    <p id="voiceStatus">Voice Control is OFF</p>
+
+  </div>
+
+</section>
 
   <!-- ACCOUNT PANEL -->
   <section id="accountPanel" class="featurePanel hidden">
