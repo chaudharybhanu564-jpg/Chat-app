@@ -267,7 +267,7 @@ $("accountEditProfileBtn")?.addEventListener("click", () => {
 });
 
 /* Save Profile */
-$("saveProfileBtn")?.addEventListener("click", () => {
+$("saveProfileBtn")?.addEventListener("click", async () => {
   const name = $("profileNameInput").value.trim();
   const bio = $("profileBioInput").value.trim();
 
@@ -276,17 +276,45 @@ $("saveProfileBtn")?.addEventListener("click", () => {
     return;
   }
 
-  me.name = name;
-  me.bio = bio || "Hey there! I am using ChatApp.";
+  if (bio.length > 200) {
+    alert("Bio must be 200 characters or less.");
+    return;
+  }
 
-  sessionStorage.setItem("chat_user", JSON.stringify(me));
+  try {
+    const response = await fetch("/api/profile", {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer " + token
+      },
+      body: JSON.stringify({ name, bio })
+    });
 
-  $("profileName").textContent = me.name;
-  $("profileAbout").textContent = me.bio;
-  $("myAvatar").textContent = me.name[0].toUpperCase();
-  $("profileAvatar").textContent = me.name[0].toUpperCase();
+    const data = await response.json();
 
-  closeFeaturePanel("editProfilePanel");
+    if (!response.ok) {
+      alert(data.error || "Profile update failed.");
+      return;
+    }
+
+    me = data.user;
+
+    sessionStorage.setItem("chat_user", JSON.stringify(me));
+
+    $("profileName").textContent = me.name;
+    $("profileEmail").textContent = me.email;
+    $("profileAbout").textContent = me.bio;
+
+    $("myAvatar").textContent = me.name[0].toUpperCase();
+    $("profileAvatar").textContent = me.name[0].toUpperCase();
+
+    closeFeaturePanel("editProfilePanel");
+
+    alert("Profile saved successfully!");
+  } catch (error) {
+    alert("Something went wrong. Please try again.");
+  }
 });
 
 /* Status */
