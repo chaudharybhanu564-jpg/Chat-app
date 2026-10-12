@@ -470,6 +470,57 @@ $("changeEmailBtn")?.addEventListener("click", async () => {
   }
 });
 
+/* Change Password */
+
+document.querySelectorAll(".accountContent .panelAction").forEach(button => {
+if (button.textContent.includes("Change Password")) {
+button.addEventListener("click", async () => {
+const currentPassword = prompt("Enter your current password:");
+if (!currentPassword) return;
+
+  const newPassword = prompt("Enter your new password (minimum 6 characters):");
+  if (!newPassword) return;
+
+  if (newPassword.length < 6) {
+    alert("New password must be at least 6 characters.");
+    return;
+  }
+
+  const confirmPassword = prompt("Confirm your new password:");
+  if (confirmPassword !== newPassword) {
+    alert("Passwords do not match.");
+    return;
+  }
+
+  try {
+    const response = await fetch("/api/profile/password", {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer " + token
+      },
+      body: JSON.stringify({
+        currentPassword,
+        newPassword
+      })
+    });
+
+    const data = await response.json();
+
+    if (!response.ok) {
+      alert(data.error || "Password change failed.");
+      return;
+    }
+
+    alert("Password changed successfully!");
+  } catch (error) {
+    alert("Network error. Please try again.");
+  }
+});
+
+}
+});
+
 /* Status */
 document.querySelector(".statusAdd")?.addEventListener("click", () => {
   alert("Status creation will be added next.");
