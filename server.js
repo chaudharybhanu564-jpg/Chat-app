@@ -317,6 +317,57 @@ app.put("/api/profile/email", auth, async (req, res) => {
   }
 });
 
+/* CHANGE PASSWORD */
+
+app.put("/api/profile/password", auth, async (req, res) => {
+try {
+const { currentPassword, newPassword } = req.body;
+
+if (!currentPassword || !newPassword) {
+  return res.status(400).json({
+    error: "Please enter both passwords."
+  });
+}
+
+if (newPassword.length < 6) {
+  return res.status(400).json({
+    error: "New password must be at least 6 characters."
+  });
+}
+
+const user = await User.findById(req.user.id);
+
+if (!user) {
+  return res.status(404).json({
+    error: "User not found."
+  });
+}
+
+const isMatch = await bcrypt.compare(
+  currentPassword,
+  user.password
+);
+
+if (!isMatch) {
+  return res.status(401).json({
+    error: "Current password is incorrect."
+  });
+}
+
+user.password = await bcrypt.hash(newPassword, 10);
+await user.save();
+
+res.json({
+  message: "Password changed successfully."
+});
+
+} catch (error) {
+res.status(500).json({
+error: "Password change failed."
+});
+}
+});
+
 /* USERS */
 
 app.get("/api/users", auth, async (req, res) => {
