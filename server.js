@@ -403,18 +403,140 @@ error: "Password change failed."
 }
 });
 
-/* USERS */
+/* PRIVATE CONTACTS */
+
+/* GET ACCEPTED CONTACTS */
 
 app.get("/api/users", auth, async (req, res) => {
-  const users = await User.find({
-    _id: { $ne: req.user.id }
-  })
-    .select("name email online lastSeen")
-    .sort({ name: 1 });
+  try {
+    const contacts = await ContactRequest.find({
+      status: "accepted",
+      $or: [
+        { sender: req.user.id },
+        { receiver: req.user.id }
+      ]
+    });
 
-  res.json(users);
+    const contactIds = contacts.map((contact) =>
+      contact.sender.toString() === req.user.id
+        ? contact.receiver
+        : contact.sender
+    );
+
+    const users = await User.find({
+      _id: { $in: contactIds }
+    })
+      .select("name online lastSeen")
+      .sort({ name: 1 });
+
+    res.json(users);
+  } catch (error) {
+    res.status(500).json({
+      error: "Could not load private contacts."
+    });
+  }
 });
 
+
+/* SEARCH USERS */
+
+app.get("/api/users/search", auth, async (req, res) => {
+  try {
+    const query = (req.query.q || "").trim();
+
+    if (query.length < 2) {
+      return res.json([]);
+    }
+
+    const safeQuery = query.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+
+    const users = await User.find({
+      _id: { $ne: req.user.id },
+      $or: [
+        { name: { $regex: safeQuery, $options: "i" } },
+        { email: { $regex: safeQuery, $options: "i" } }
+      ]
+    })
+      .select("name email")
+      .limit(20);
+
+    res.json(users);
+  } catch (error) {
+    res.status(500).json({
+      error: "User search failed."
+    });
+  }
+});
+
+
+/* SEND CONTACT REQUEST */
+
+app.post("/api/contacts/request/:userId", auth, async (req, res) => {
+  try {
+    const receiverId = req.params.userId;
+
+    if (receiverId === req.user.id) {
+      return res.status(400).json({
+        error: "You cannot add yourself."
+      });
+    }
+
+    const receiver = await User.findById(receiverId);
+
+    if (!receiver) {
+      return res.status(404).json({
+        error: "User not found."
+      });
+    }
+
+    const existing = await ContactRequest.findOne({
+      $or: [
+        { sender: req.user.id, receiver: receiverId },
+        { sender: receiverId, receiver: req.user.id }
+      ]
+    });
+
+    if (existing) {
+      if (existing.status === "accepted") {
+        return res.status(409).json({
+          error: "You are already contacts."
+        });
+      }
+
+      if (existing.status === "pending") {
+        return res.status(409).json({
+          error:
+            existing.receiver.toString() === req.user.id
+              ? "This user has already sent you a request."
+              : "Request already sent."
+        });
+      }
+
+      await ContactRequest.deleteOne({
+        _id: existing._id
+      });
+    }
+
+    await ContactRequest.create({
+      sender: req.user.id,
+      receiver: receiverId
+    });
+
+    res.json({
+      message: "Contact request sent successfully."
+    });
+  } catch (error) {
+    if (error.code === 11000) {
+      return res.status(409).json({
+        error: "Request already exists."
+      });
+    }
+
+    res.status(500).json({
+      error: "Could not send contact request."
+    });
+  }
+});
 
 /* MESSAGES */
 
