@@ -538,6 +538,74 @@ app.post("/api/contacts/request/:userId", auth, async (req, res) => {
   }
 });
 
+/* INCOMING CONTACT REQUESTS */
+
+app.get("/api/contacts/requests", auth, async (req, res) => {
+try {
+const requests = await ContactRequest.find({
+receiver: req.user.id,
+status: "pending"
+})
+.populate("sender", "name email")
+.sort({ createdAt: -1 });
+
+res.json(requests);
+
+} catch (error) {
+res.status(500).json({
+error: "Could not load contact requests."
+});
+}
+});
+
+/* ACCEPT OR REJECT CONTACT REQUEST */
+
+app.put("/api/contacts/request/:requestId", auth, async (req, res) => {
+try {
+const { action } = req.body;
+
+if (!["accept", "reject"].includes(action)) {
+  return res.status(400).json({
+    error: "Invalid action."
+  });
+}
+
+const request = await ContactRequest.findOne({
+  _id: req.params.requestId,
+  receiver: req.user.id,
+  status: "pending"
+});
+
+if (!request) {
+  return res.status(404).json({
+    error: "Pending contact request not found."
+  });
+}
+
+if (action === "accept") {
+  request.status = "accepted";
+  await request.save();
+
+  return res.json({
+    message: "Contact request accepted."
+  });
+}
+
+await ContactRequest.deleteOne({
+  _id: request._id
+});
+
+res.json({
+  message: "Contact request rejected."
+});
+
+} catch (error) {
+res.status(500).json({
+error: "Could not update contact request."
+});
+}
+});
+
 /* MESSAGES */
 
 app.get("/api/messages/:userId", auth, async (req, res) => {
